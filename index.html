@@ -5,28 +5,55 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Visit Salt Lake — Platform Investment Analysis</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'Saans';src:url('/assets/fonts/SaansRegular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Saans';src:url('/assets/fonts/SaansRegularItalic.otf') format('opentype');font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:'Saans';src:url('/assets/fonts/SaansMedium.otf') format('opentype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Saans';src:url('/assets/fonts/SaansMediumItalic.otf') format('opentype');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'Saans';src:url('/assets/fonts/SaansSemiBold.otf') format('opentype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Ivar';src:url('/assets/fonts/IvarText-Regular.otf') format('opentype');font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:'Ivar';src:url('/assets/fonts/IvarText-Medium.otf') format('opentype');font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:'Ivar';src:url('/assets/fonts/IvarText-SemiBold.otf') format('opentype');font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:'Ivar';src:url('/assets/fonts/IvarText-Bold.otf') format('opentype');font-weight:700;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --ink:#0A0E17;--ink2:#3D4558;--ink3:#7A8494;--ink4:#B8BFCA;--ink5:#E2E5EA;
-  --white:#FFFFFF;--surface:#F5F6F8;--surface2:#ECEEF2;
-  --teal:#0B7B6B;--teal-lt:#D4EDE9;--teal-md:#1D9E75;
-  --red:#B83228;--red-lt:#FAEAE8;
-  --gold:#9A6B00;--gold-lt:#FAF0D8;
-  --blue:#1A4F8A;--blue-lt:#E4EDF8;
-  --col-a:#0A0E17;--col-b:#0B7B6B;--col-c:#1A4F8A;
+  /* VSL brand palette */
+  --ink:#062842;        /* Pantone 2965 — deep navy, primary dark */
+  --ink-alt:#212121;    /* Pantone 19-4000 — neutral black */
+  --ink2:#2C4A66;--ink3:#6F8499;--ink4:#B5C2CF;--ink5:#DCE3EA;
+  --white:#FFFFFF;
+  --surface:#F6F1EC;    /* Pantone 11-4101 — cream */
+  --surface2:#ECE6DF;
+  --green:#0D4C26;      /* Pantone 357 — forest, savings/good */
+  --green-md:#1A854C;   /* Pantone 348 — verdant */
+  --green-soft:#8DCEA8; /* Pantone 345 — mint */
+  --green-lt:#E1EFE3;
+  --red:#A41E22;        /* Pantone 7621 — crimson */
+  --red-md:#D24B27;     /* Pantone 7597 — vermilion */
+  --red-soft:#F58B88;   /* Pantone 2339 — coral */
+  --red-lt:#FAC8C5;     /* Pantone 4032 — blush */
+  --gold:#C97A07;       /* darker readable gold */
+  --gold-md:#F29F1F;    /* Pantone 1375 — saffron */
+  --gold-lt:#FFDDA3;    /* Pantone 2001 — cream-gold */
+  --blue:#147CB2;       /* Pantone 2390 — signal blue */
+  --blue-soft:#4CACD1;  /* Pantone 6120 */
+  --blue-lt:#DCEBF3;
+  /* Backwards-compat aliases */
+  --teal:var(--green);--teal-md:var(--green-md);--teal-lt:var(--green-lt);
+  --col-a:var(--ink);--col-b:var(--green);--col-c:var(--blue);
 }
 html{font-size:13px}
-body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-height:1.5;max-width:960px;margin:0 auto}
+body{font-family:'Saans','DM Sans',system-ui,sans-serif;background:#fff;color:var(--ink);line-height:1.5;max-width:960px;margin:0 auto}
 
 /* HEADER */
 .hdr{background:var(--ink);padding:44px 52px 36px;position:relative;overflow:hidden}
-.hdr::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.07)}
-.hdr::before{content:'';position:absolute;right:20px;top:20px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,.05)}
+.hdr::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
+.hdr::before{content:'';position:absolute;right:20px;top:20px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,.06)}
+.hdr-logo{position:absolute;top:36px;right:52px;width:64px;height:auto;opacity:.95;z-index:2}
 .eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:14px}
-.hdr h1{font-family:'DM Serif Display',serif;font-size:36px;line-height:1.15;font-weight:400;color:#fff;max-width:540px}
-.hdr h1 em{font-style:italic;color:rgba(255,255,255,.45)}
+.hdr h1{font-family:'Ivar','DM Serif Display',Georgia,serif;font-size:36px;line-height:1.15;font-weight:400;color:#fff;max-width:540px;font-style:normal}
+.hdr h1 .alt{font-style:normal;font-weight:400;color:rgba(255,255,255,.55)}
 .hdr-meta{margin-top:20px;font-size:11px;color:rgba(255,255,255,.3)}
 
 /* VERDICT */
@@ -48,7 +75,7 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 .kpi:first-child{border-radius:10px 0 0 10px}
 .kpi:last-child{border-radius:0 10px 10px 0}
 .kpi-lbl{font-size:10px;color:var(--ink3);margin-bottom:7px}
-.kpi-num{font-family:'DM Serif Display',serif;font-size:26px;line-height:1;color:var(--ink)}
+.kpi-num{font-family:'Ivar','DM Serif Display',Georgia,serif;font-size:26px;line-height:1;color:var(--ink)}
 .kpi-num.g{color:var(--teal)}
 .kpi-sub{font-size:10px;color:var(--ink3);margin-top:4px}
 
@@ -61,8 +88,8 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 .ch-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:6px}
 .ch-title{font-size:14px;font-weight:500;color:#fff;line-height:1.25}
 .ch-sub{font-size:10px;color:rgba(255,255,255,.42);margin-top:4px}
-.ch.b{background:rgba(11,123,107,.35)}
-.ch.c{background:rgba(26,79,138,.22)}
+.ch.b{background:rgba(13,76,38,.55)}
+.ch.c{background:rgba(20,124,178,.40)}
 
 /* Group headers */
 .rg{display:grid;grid-template-columns:200px 1fr 1fr 1fr;background:var(--surface2);border-top:1px solid var(--ink5)}
@@ -72,8 +99,8 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 .row{display:grid;grid-template-columns:200px 1fr 1fr 1fr;border-top:1px solid var(--ink5);align-items:stretch}
 .row:hover{background:var(--surface)}
 .cell{padding:11px 20px;display:flex;flex-direction:column;justify-content:center}
-.cell.b{background:rgba(11,123,107,.04)}
-.cell.c{background:rgba(26,79,138,.04)}
+.cell.b{background:rgba(13,76,38,.05)}
+.cell.c{background:rgba(20,124,178,.05)}
 .cell-name{font-size:12px;color:var(--ink2);font-weight:500}
 .cell-desc{font-size:10px;color:var(--ink3);margin-top:2px}
 .val{font-family:'DM Mono',monospace;font-size:13px;color:var(--ink2)}
@@ -98,10 +125,10 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 .grand{display:grid;grid-template-columns:200px 1fr 1fr 1fr;border-top:2px solid var(--ink);background:var(--ink)}
 .grand .cell{padding:16px 20px}
 .grand .cell-name{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45)}
-.grand .val{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-top:2px}
-.grand .val.g{color:#5DCAA5}
+.grand .val{font-family:'Ivar','DM Serif Display',Georgia,serif;font-size:22px;color:#fff;margin-top:2px}
+.grand .val.g{color:#8DCEA8}
 .grand .delta{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px}
-.grand .delta.pos{color:#5DCAA5}
+.grand .delta.pos{color:#8DCEA8}
 
 /* SCENARIO CARDS */
 .scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:4px}
@@ -111,7 +138,7 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 .sc.featured{background:var(--teal);outline:none}
 .sc-tag{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
 .sc.featured .sc-tag{color:rgba(255,255,255,.6)}
-.sc-num{font-family:'DM Serif Display',serif;font-size:28px;line-height:1;color:var(--ink)}
+.sc-num{font-family:'Ivar','DM Serif Display',Georgia,serif;font-size:28px;line-height:1;color:var(--ink)}
 .sc.featured .sc-num{color:#fff}
 .sc-period{font-size:11px;color:var(--ink3);margin-left:2px}
 .sc.featured .sc-period{color:rgba(255,255,255,.55)}
@@ -122,7 +149,7 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 .be-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:4px}
 .be{background:var(--surface);padding:18px 20px;border-radius:8px}
 .be-lbl{font-size:10px;color:var(--ink3);margin-bottom:6px}
-.be-num{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink)}
+.be-num{font-family:'Ivar','DM Serif Display',Georgia,serif;font-size:24px;color:var(--ink)}
 .be-num.g{color:var(--teal)}
 .be-sub{font-size:10px;color:var(--ink3);margin-top:4px}
 
@@ -154,7 +181,7 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 
 /* FOOTER */
 .ftr{background:var(--surface);padding:18px 52px;display:flex;justify-content:space-between;align-items:center;gap:24px}
-.ftr-logo{font-family:'DM Serif Display',serif;font-size:14px;color:var(--ink2);white-space:nowrap}
+.ftr-logo{font-family:'Ivar','DM Serif Display',Georgia,serif;font-size:14px;color:var(--ink2);white-space:nowrap}
 .ftr-note{font-size:10px;color:var(--ink3);text-align:right;line-height:1.6}
 
 @media print{
@@ -190,15 +217,16 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
 
 <!-- HEADER -->
 <div class="hdr">
+  <img class="hdr-logo" src="/assets/logos/vsl-stacked-white.svg" alt="Visit Salt Lake">
   <p class="eyebrow">Visit Salt Lake &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; May 2026</p>
-  <h1>Platform Investment Analysis<br><em>Simpleview today vs. HQ rebuild</em></h1>
+  <h1>Platform Investment Analysis<br><span class="alt">Simpleview today vs. HQ rebuild</span></h1>
   <p class="hdr-meta">Prepared for CEO / CFO review &nbsp;·&nbsp; Sources: Granicus Q-528266, Q-528270 · HQ Rebuild + Plugin Replacement proposals</p>
 </div>
 
 <!-- VERDICT -->
 <div class="verdict">
   <span class="verdict-lbl">Bottom line</span>
-  <p class="verdict-txt"><strong>Year 1 costs $0–$117K more</strong> than staying put. From <strong>Year 2 onward, savings of $153K–$215K compound annually</strong> while the platform becomes faster, more on-brand, and AI-native. The $80K Media House credit reduces net build cost to <strong>$170K–$270K</strong>. Breakeven: <strong>16–21 months</strong> from launch.</p>
+  <p class="verdict-txt"><strong>Year 1 net cash impact: −$44K to +$117K</strong> vs. staying put (best case Year 1 is already cheaper). From <strong>Year 2 on, savings of $153K–$215K compound annually</strong> while the platform becomes faster, more on-brand, and AI-native. The $80K Media House credit cuts net build to <strong>$170K–$270K</strong>. Breakeven: <strong>10–21 months</strong> from launch.</p>
 </div>
 
 <div class="body">
@@ -441,21 +469,21 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
     <div class="scenarios">
       <div class="sc">
         <p class="sc-tag">Conservative scenario</p>
-        <p class="sc-num">$11,300<span class="sc-period">/mo</span></p>
-        <p style="font-size:10px;color:var(--ink3);margin-top:4px">$135,600 / year</p>
-        <p class="sc-note">$40K retainer · lean infra · low AI usage · minimal feature dev · retained vendors unchanged</p>
+        <p class="sc-num">$14,200<span class="sc-period">/mo</span></p>
+        <p style="font-size:10px;color:var(--ink3);margin-top:4px">$170K / year</p>
+        <p class="sc-note">$40K retainer · $15K hosting · $15K AI · email replacement · all retained vendors held flat</p>
       </div>
       <div class="sc featured">
         <p class="sc-tag">Most likely — plan for this</p>
-        <p class="sc-num">$15,800<span class="sc-period">/mo</span></p>
-        <p style="font-size:10px;color:rgba(255,255,255,.5);margin-top:4px">$189,600 / year</p>
-        <p class="sc-note">$60K retainer · mid infra · $20K AI · email replacement · all retained vendors</p>
+        <p class="sc-num">$16,700<span class="sc-period">/mo</span></p>
+        <p style="font-size:10px;color:rgba(255,255,255,.5);margin-top:4px">$200K / year</p>
+        <p class="sc-note">$60K retainer · $18K hosting · $20K AI · email replacement · all retained vendors</p>
       </div>
       <div class="sc">
         <p class="sc-tag">High development</p>
-        <p class="sc-num">$18,800<span class="sc-period">/mo</span></p>
-        <p style="font-size:10px;color:var(--ink3);margin-top:4px">$226,000 / year</p>
-        <p class="sc-note">$80K retainer · full Vercel Enterprise infra · $25K AI · active roadmap · heavy feature lift</p>
+        <p class="sc-num">$19,300<span class="sc-period">/mo</span></p>
+        <p style="font-size:10px;color:var(--ink3);margin-top:4px">$231K / year</p>
+        <p class="sc-note">$80K retainer · $22K hosting · $25K AI · active roadmap · heavy feature lift</p>
       </div>
     </div>
   </div>
@@ -473,8 +501,8 @@ body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-heig
       </div>
       <div class="be">
         <p class="be-lbl">Breakeven on net build cost</p>
-        <p class="be-num g">16–21 months</p>
-        <p class="be-sub">from platform launch · ($170K–$270K) ÷ savings</p>
+        <p class="be-num g">10–21 months</p>
+        <p class="be-sub">from launch · $170K÷$215K = 9.5mo (best) · $270K÷$153K = 21mo (worst)</p>
       </div>
       <div class="be">
         <p class="be-lbl">5-year net benefit</p>
