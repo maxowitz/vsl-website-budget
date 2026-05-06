@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visit Salt Lake — Platform Investment Analysis</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --ink:#0A0E17;--ink2:#3D4558;--ink3:#7A8494;--ink4:#B8BFCA;--ink5:#E2E5EA;
+  --white:#FFFFFF;--surface:#F5F6F8;--surface2:#ECEEF2;
+  --teal:#0B7B6B;--teal-lt:#D4EDE9;--teal-md:#1D9E75;
+  --red:#B83228;--red-lt:#FAEAE8;
+  --gold:#9A6B00;--gold-lt:#FAF0D8;
+  --blue:#1A4F8A;--blue-lt:#E4EDF8;
+  --col-a:#0A0E17;--col-b:#0B7B6B;--col-c:#1A4F8A;
+}
+html{font-size:13px}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:var(--ink);line-height:1.5;max-width:960px;margin:0 auto}
+
+/* HEADER */
+.hdr{background:var(--ink);padding:44px 52px 36px;position:relative;overflow:hidden}
+.hdr::after{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;border:1px solid rgba(255,255,255,.07)}
+.hdr::before{content:'';position:absolute;right:20px;top:20px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(255,255,255,.05)}
+.eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:14px}
+.hdr h1{font-family:'DM Serif Display',serif;font-size:36px;line-height:1.15;font-weight:400;color:#fff;max-width:540px}
+.hdr h1 em{font-style:italic;color:rgba(255,255,255,.45)}
+.hdr-meta{margin-top:20px;font-size:11px;color:rgba(255,255,255,.3)}
+
+/* VERDICT */
+.verdict{background:var(--teal);padding:18px 52px;display:flex;align-items:center;gap:16px}
+.verdict-lbl{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.55);white-space:nowrap;flex-shrink:0}
+.verdict-txt{font-size:13px;color:rgba(255,255,255,.92);line-height:1.6}
+.verdict-txt strong{color:#fff;font-weight:500}
+
+/* BODY */
+.body{padding:0 52px 52px}
+
+/* SECTION */
+.sec{margin-top:40px}
+.sec-lbl{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);padding-bottom:10px;border-bottom:1px solid var(--ink5);margin-bottom:20px}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.kpi{background:var(--surface);padding:18px 20px}
+.kpi:first-child{border-radius:10px 0 0 10px}
+.kpi:last-child{border-radius:0 10px 10px 0}
+.kpi-lbl{font-size:10px;color:var(--ink3);margin-bottom:7px}
+.kpi-num{font-family:'DM Serif Display',serif;font-size:26px;line-height:1;color:var(--ink)}
+.kpi-num.g{color:var(--teal)}
+.kpi-sub{font-size:10px;color:var(--ink3);margin-top:4px}
+
+/* ══ MAIN COMPARISON TABLE ══ */
+.compare-wrap{border:1px solid var(--ink5);border-radius:12px;overflow:hidden}
+
+/* Column headers */
+.compare-heads{display:grid;grid-template-columns:200px 1fr 1fr 1fr;background:var(--ink)}
+.ch{padding:18px 20px}
+.ch-tag{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:6px}
+.ch-title{font-size:14px;font-weight:500;color:#fff;line-height:1.25}
+.ch-sub{font-size:10px;color:rgba(255,255,255,.42);margin-top:4px}
+.ch.b{background:rgba(11,123,107,.35)}
+.ch.c{background:rgba(26,79,138,.22)}
+
+/* Group headers */
+.rg{display:grid;grid-template-columns:200px 1fr 1fr 1fr;background:var(--surface2);border-top:1px solid var(--ink5)}
+.rg-label{grid-column:1/-1;padding:8px 20px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+
+/* Data rows */
+.row{display:grid;grid-template-columns:200px 1fr 1fr 1fr;border-top:1px solid var(--ink5);align-items:stretch}
+.row:hover{background:var(--surface)}
+.cell{padding:11px 20px;display:flex;flex-direction:column;justify-content:center}
+.cell.b{background:rgba(11,123,107,.04)}
+.cell.c{background:rgba(26,79,138,.04)}
+.cell-name{font-size:12px;color:var(--ink2);font-weight:500}
+.cell-desc{font-size:10px;color:var(--ink3);margin-top:2px}
+.val{font-family:'DM Mono',monospace;font-size:13px;color:var(--ink2)}
+.val.zero{color:var(--teal);font-weight:500}
+.val.gone{color:var(--ink4);text-decoration:line-through}
+.val.keep{color:var(--ink2)}
+.val.new-cost{color:var(--blue);font-weight:500}
+.badge{display:inline-block;font-size:9px;font-weight:500;padding:2px 7px;border-radius:20px;margin-top:4px;letter-spacing:.03em}
+.badge-out{background:var(--teal-lt);color:var(--teal)}
+.badge-keep{background:var(--gold-lt);color:var(--gold)}
+.badge-new{background:var(--blue-lt);color:var(--blue)}
+.badge-cancel{background:var(--surface2);color:var(--ink3)}
+
+/* Subtotal rows */
+.subtotal{display:grid;grid-template-columns:200px 1fr 1fr 1fr;border-top:2px solid var(--ink5);background:var(--surface)}
+.subtotal .cell{padding:12px 20px}
+.subtotal .cell-name{font-size:11px;font-weight:500;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em}
+.subtotal .val{font-size:14px;font-weight:500;color:var(--ink)}
+.subtotal .val.g{color:var(--teal)}
+
+/* Grand total */
+.grand{display:grid;grid-template-columns:200px 1fr 1fr 1fr;border-top:2px solid var(--ink);background:var(--ink)}
+.grand .cell{padding:16px 20px}
+.grand .cell-name{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.grand .val{font-family:'DM Serif Display',serif;font-size:22px;color:#fff;margin-top:2px}
+.grand .val.g{color:#5DCAA5}
+.grand .delta{font-size:11px;color:rgba(255,255,255,.45);margin-top:4px}
+.grand .delta.pos{color:#5DCAA5}
+
+/* SCENARIO CARDS */
+.scenarios{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:4px}
+.sc{background:var(--surface);padding:20px 22px}
+.sc:first-child{border-radius:10px 0 0 10px}
+.sc:last-child{border-radius:0 10px 10px 0}
+.sc.featured{background:var(--teal);outline:none}
+.sc-tag{font-size:9px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.sc.featured .sc-tag{color:rgba(255,255,255,.6)}
+.sc-num{font-family:'DM Serif Display',serif;font-size:28px;line-height:1;color:var(--ink)}
+.sc.featured .sc-num{color:#fff}
+.sc-period{font-size:11px;color:var(--ink3);margin-left:2px}
+.sc.featured .sc-period{color:rgba(255,255,255,.55)}
+.sc-note{font-size:11px;color:var(--ink3);margin-top:8px;line-height:1.55}
+.sc.featured .sc-note{color:rgba(255,255,255,.65)}
+
+/* BREAKEVEN */
+.be-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:4px}
+.be{background:var(--surface);padding:18px 20px;border-radius:8px}
+.be-lbl{font-size:10px;color:var(--ink3);margin-bottom:6px}
+.be-num{font-family:'DM Serif Display',serif;font-size:24px;color:var(--ink)}
+.be-num.g{color:var(--teal)}
+.be-sub{font-size:10px;color:var(--ink3);margin-top:4px}
+
+/* URGENT */
+.urgent{background:var(--red-lt);border:1px solid #E5C5C2;border-radius:10px;padding:18px 22px}
+.urgent-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.urgent-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0}
+.urgent-title{font-size:12px;font-weight:500;color:var(--red)}
+.urgent-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.uopt{background:rgba(255,255,255,.6);border-radius:6px;padding:12px 14px}
+.uopt-title{font-size:11px;font-weight:500;color:var(--ink2);margin-bottom:4px}
+.uopt-body{font-size:11px;color:var(--ink3);line-height:1.55}
+.uopt-body strong{color:var(--ink2);font-weight:500}
+
+/* ACTIONS */
+.act-row{display:grid;grid-template-columns:72px 1fr 100px 100px;gap:0;padding:9px 14px;border-radius:6px;margin-bottom:2px;align-items:center}
+.act-row.head{padding:5px 14px;margin-bottom:6px}
+.act-row.head span{font-size:9px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3)}
+.act-row:not(.head){background:var(--surface)}
+.act-pri{font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;text-align:center;width:fit-content}
+.p-urgent{background:var(--red-lt);color:var(--red)}
+.p-high{background:var(--gold-lt);color:var(--gold)}
+.p-med{background:var(--blue-lt);color:var(--blue)}
+.act-name{font-size:12px;color:var(--ink2);padding:0 12px}
+.act-owner,.act-date{font-size:11px;color:var(--ink3);text-align:right}
+
+/* DIVIDER */
+.div{height:1px;background:var(--ink5);margin:36px 0}
+
+/* FOOTER */
+.ftr{background:var(--surface);padding:18px 52px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+.ftr-logo{font-family:'DM Serif Display',serif;font-size:14px;color:var(--ink2);white-space:nowrap}
+.ftr-note{font-size:10px;color:var(--ink3);text-align:right;line-height:1.6}
+
+@media print{
+  body{max-width:100%}
+  .hdr,.body,.verdict,.ftr{padding-left:40px;padding-right:40px}
+  .hdr{padding-top:32px;padding-bottom:26px}
+  @page{margin:0;size:A4 landscape}
+  .row:hover{background:transparent}
+}
+
+@media (max-width:760px){
+  html{font-size:12px}
+  .hdr,.verdict,.ftr{padding-left:24px;padding-right:24px}
+  .body{padding:0 24px 40px}
+  .hdr h1{font-size:28px}
+  .kpi-strip{grid-template-columns:repeat(2,1fr);gap:1px}
+  .kpi:nth-child(1){border-radius:10px 0 0 0}
+  .kpi:nth-child(2){border-radius:0 10px 0 0}
+  .kpi:nth-child(3){border-radius:0 0 0 10px}
+  .kpi:nth-child(4){border-radius:0 0 10px 0}
+  .compare-heads,.row,.rg,.subtotal,.grand{grid-template-columns:140px 1fr 1fr 1fr}
+  .scenarios{grid-template-columns:1fr;gap:1px}
+  .sc:first-child{border-radius:10px 10px 0 0}
+  .sc:last-child{border-radius:0 0 10px 10px}
+  .be-row{grid-template-columns:1fr}
+  .urgent-grid{grid-template-columns:1fr}
+  .act-row{grid-template-columns:60px 1fr;row-gap:4px}
+  .act-owner,.act-date{grid-column:2;text-align:left}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="hdr">
+  <p class="eyebrow">Visit Salt Lake &nbsp;·&nbsp; Confidential &nbsp;·&nbsp; May 2026</p>
+  <h1>Platform Investment Analysis<br><em>Simpleview today vs. HQ rebuild</em></h1>
+  <p class="hdr-meta">Prepared for CEO / CFO review &nbsp;·&nbsp; Sources: Granicus Q-528266, Q-528270 · HQ Rebuild + Plugin Replacement proposals</p>
+</div>
+
+<!-- VERDICT -->
+<div class="verdict">
+  <span class="verdict-lbl">Bottom line</span>
+  <p class="verdict-txt"><strong>Year 1 costs $0–$117K more</strong> than staying put. From <strong>Year 2 onward, savings of $153K–$215K compound annually</strong> while the platform becomes faster, more on-brand, and AI-native. The $80K Media House credit reduces net build cost to <strong>$170K–$270K</strong>. Breakeven: <strong>16–21 months</strong> from launch.</p>
+</div>
+
+<div class="body">
+
+  <!-- KPI STRIP -->
+  <div class="sec">
+    <div class="kpi-strip">
+      <div class="kpi">
+        <p class="kpi-lbl">Current annual spend</p>
+        <p class="kpi-num">$384K</p>
+        <p class="kpi-sub">17 vendors · none integrated</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-lbl">One-time build (net of $80K credit)</p>
+        <p class="kpi-num">$170K–$270K</p>
+        <p class="kpi-sub">Phase 2 + 3 · decision point after Phase 2</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-lbl">Year 2+ annual spend</p>
+        <p class="kpi-num g">$170K–$231K</p>
+        <p class="kpi-sub">retainer + infra + retained vendors + AI</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-lbl">5-year net benefit</p>
+        <p class="kpi-num g">$340K–$690K</p>
+        <p class="kpi-sub">savings × 4 yrs minus net build cost</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN COMPARISON TABLE -->
+  <div class="sec">
+    <p class="sec-lbl">Full cost comparison — line by line</p>
+
+    <div class="compare-wrap">
+
+      <!-- Column headers -->
+      <div class="compare-heads">
+        <div class="ch" style="background:rgba(255,255,255,.04)">
+          <p class="ch-tag">Cost line</p>
+          <p class="ch-title">Vendor / service</p>
+        </div>
+        <div class="ch">
+          <p class="ch-tag">Column A &nbsp;·&nbsp; Now</p>
+          <p class="ch-title">Current Simpleview stack</p>
+          <p class="ch-sub">Annual recurring today</p>
+        </div>
+        <div class="ch b">
+          <p class="ch-tag">Column B &nbsp;·&nbsp; Year 1</p>
+          <p class="ch-title">HQ launch year</p>
+          <p class="ch-sub">Build cost + recurring (one-time)</p>
+        </div>
+        <div class="ch c">
+          <p class="ch-tag">Column C &nbsp;·&nbsp; Year 2+</p>
+          <p class="ch-title">Post-launch steady state</p>
+          <p class="ch-sub">Annual recurring after launch</p>
+        </div>
+      </div>
+
+      <!-- GROUP: Replaced by rebuild -->
+      <div class="rg"><p class="rg-label">Eliminated by rebuild — goes to $0</p></div>
+
+      <div class="row">
+        <div class="cell"><p class="cell-name">CMS</p><p class="cell-desc">Hosting, CDN, web server</p></div>
+        <div class="cell"><p class="val">$55,000</p></div>
+        <div class="cell b"><p class="val zero">$0</p><span class="badge badge-out">Replaced natively</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">CRM (Simpleview)</p><p class="cell-desc">Database, partners, content</p></div>
+        <div class="cell"><p class="val">$72,398</p></div>
+        <div class="cell b"><p class="val zero">$0</p><span class="badge badge-out">Replaced natively</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">SimpleSupport 50</p><p class="cell-desc">Technical service contract</p></div>
+        <div class="cell"><p class="val">$75,000</p></div>
+        <div class="cell b"><p class="val zero">$0</p><span class="badge badge-out">HQ retainer covers</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Engagement Manager</p><p class="cell-desc">Priority access &amp; service</p></div>
+        <div class="cell"><p class="val">$44,100</p></div>
+        <div class="cell b"><p class="val zero">$0</p><span class="badge badge-out">HQ retainer covers</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Civic Plus</p><p class="cell-desc">ADA compliance scanning</p></div>
+        <div class="cell"><p class="val">$9,500</p></div>
+        <div class="cell b"><p class="val zero">$0</p><span class="badge badge-out">Built into CI pipeline</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Map Publisher</p><p class="cell-desc">CRM-integrated maps</p></div>
+        <div class="cell"><p class="val">$6,300</p></div>
+        <div class="cell b"><p class="val zero">$0</p><span class="badge badge-out">Native CMS maps</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Act On</p><p class="cell-desc">Email newsletters</p></div>
+        <div class="cell"><p class="val">$23,436</p></div>
+        <div class="cell b"><p class="val zero">$1.2K–$6K</p><span class="badge badge-out">Replaced (Resend/Postmark)</span></div>
+        <div class="cell c"><p class="val zero">$1.2K–$6K</p></div>
+      </div>
+
+      <!-- Subtotal: eliminated -->
+      <div class="subtotal">
+        <div class="cell"><p class="cell-name">Eliminated subtotal</p></div>
+        <div class="cell"><p class="val">$285,734</p></div>
+        <div class="cell b"><p class="val g">~$1.2K–$6K</p></div>
+        <div class="cell c"><p class="val g">~$1.2K–$6K</p></div>
+      </div>
+
+      <!-- GROUP: Retained vendors -->
+      <div class="rg"><p class="rg-label">Retained vendors — no change at launch</p></div>
+
+      <div class="row">
+        <div class="cell"><p class="cell-name">Ripe</p><p class="cell-desc">Booking / hotel integration</p></div>
+        <div class="cell"><p class="val keep">$15,000</p></div>
+        <div class="cell b"><p class="val keep">$15,000</p><span class="badge badge-keep">Retained at launch</span></div>
+        <div class="cell c"><p class="val keep">$15,000</p><span class="badge badge-keep">Evaluate Phase 3</span></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Bandwango</p><p class="cell-desc">Pass ticketing (Connect Pass etc.)</p></div>
+        <div class="cell"><p class="val keep">$7,000</p></div>
+        <div class="cell b"><p class="val keep">$7,000</p><span class="badge badge-keep">Retained at launch</span></div>
+        <div class="cell c"><p class="val keep">$7,000</p><span class="badge badge-keep">Evaluate Phase 3</span></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">EventsForce</p><p class="cell-desc">Events ticketing &amp; comms</p></div>
+        <div class="cell"><p class="val keep">$15,000</p></div>
+        <div class="cell b"><p class="val keep">$15,000</p><span class="badge badge-keep">Retained at launch</span></div>
+        <div class="cell c"><p class="val keep">$15,000</p><span class="badge badge-keep">Evaluate Phase 3</span></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Google Cloud</p><p class="cell-desc">Maps API / business info</p></div>
+        <div class="cell"><p class="val keep">$18,000</p></div>
+        <div class="cell b"><p class="val keep">$18,000</p></div>
+        <div class="cell c"><p class="val keep">$18,000</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Mint+</p><p class="cell-desc">Sales lead comparison tool</p></div>
+        <div class="cell"><p class="val keep">$12,000</p></div>
+        <div class="cell b"><p class="val keep">$12,000</p></div>
+        <div class="cell c"><p class="val keep">$12,000</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">NowPlayingUtah</p><p class="cell-desc">Leisure events feed</p></div>
+        <div class="cell"><p class="val keep">$10,000</p></div>
+        <div class="cell b"><p class="val keep">$10,000</p></div>
+        <div class="cell c"><p class="val keep">$10,000</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">GoDaddy</p><p class="cell-desc">URL registrations / domains</p></div>
+        <div class="cell"><p class="val keep">$1,447</p></div>
+        <div class="cell b"><p class="val keep">$1,447</p></div>
+        <div class="cell c"><p class="val keep">$1,447</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Asana</p><p class="cell-desc">Project management</p></div>
+        <div class="cell"><p class="val keep">$20,000</p></div>
+        <div class="cell b"><p class="val keep">$20,000</p></div>
+        <div class="cell c"><p class="val keep">$20,000</p></div>
+      </div>
+
+      <!-- GROUP: Cancelled -->
+      <div class="rg"><p class="rg-label">Already cancelled — excluded from all totals</p></div>
+      <div class="row">
+        <div class="cell"><p class="cell-name" style="color:var(--ink4)">Crowdriff · Outdoor Active</p></div>
+        <div class="cell"><p class="val gone">$16,920</p></div>
+        <div class="cell b"><p class="val gone">—</p></div>
+        <div class="cell c"><p class="val gone">—</p></div>
+      </div>
+
+      <!-- GROUP: New costs -->
+      <div class="rg"><p class="rg-label">New costs introduced by HQ rebuild</p></div>
+
+      <div class="row">
+        <div class="cell"><p class="cell-name">HQ retainer</p><p class="cell-desc">Ongoing dev, support &amp; design lift</p></div>
+        <div class="cell"><p class="val gone">—</p></div>
+        <div class="cell b"><p class="val new-cost">$40K–$80K</p><span class="badge badge-new">New · annual</span></div>
+        <div class="cell c"><p class="val new-cost">$40K–$80K</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Hosting &amp; infrastructure</p><p class="cell-desc">Vercel Pro stack (replaces bundled CMS hosting)</p></div>
+        <div class="cell"><p class="val gone">—</p><p class="cell-desc" style="margin-top:3px">Bundled in CMS today</p></div>
+        <div class="cell b"><p class="val new-cost">$15K–$22K</p><span class="badge badge-new">New · annual</span></div>
+        <div class="cell c"><p class="val new-cost">$15K–$22K</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">AI API costs</p><p class="cell-desc">Trip-planning chatbot · partner listing freshness · staff reporting · multilingual visitor Q&amp;A</p></div>
+        <div class="cell"><p class="val gone">—</p></div>
+        <div class="cell b"><p class="val new-cost">$15K–$25K</p><span class="badge badge-new">New · usage-based</span></div>
+        <div class="cell c"><p class="val new-cost">$15K–$25K</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Phase 2 — demos &amp; scaffolding</p><p class="cell-desc">Decision point before Phase 3 commitment</p></div>
+        <div class="cell"><p class="val gone">—</p></div>
+        <div class="cell b"><p class="val new-cost">$50,000</p><span class="badge badge-new">One-time</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Phase 3 — full build &amp; launch</p><p class="cell-desc">Production build replacing entire Simpleview stack</p></div>
+        <div class="cell"><p class="val gone">—</p></div>
+        <div class="cell b"><p class="val new-cost">$200K–$300K</p><span class="badge badge-new">One-time</span></div>
+        <div class="cell c"><p class="val zero">$0</p></div>
+      </div>
+      <div class="row">
+        <div class="cell"><p class="cell-name">Media House credit</p><p class="cell-desc">Prior investment applied to build cost</p></div>
+        <div class="cell"><p class="val gone">—</p></div>
+        <div class="cell b"><p class="val zero" style="color:var(--teal)">–$80,000</p><span class="badge badge-out">Credit applied</span></div>
+        <div class="cell c"><p class="val gone">—</p></div>
+      </div>
+
+      <!-- GRAND TOTAL -->
+      <div class="grand">
+        <div class="cell"><p class="cell-name">Total</p></div>
+        <div class="cell">
+          <p class="val">$384,181</p>
+          <p class="delta">$32,015 / month</p>
+        </div>
+        <div class="cell">
+          <p class="val">$340K–$501K</p>
+          <p class="delta">Incl. one-time build · net of $80K credit</p>
+        </div>
+        <div class="cell">
+          <p class="val g">$170K–$231K</p>
+          <p class="delta pos">$14.1K–$19.3K / month &nbsp;·&nbsp; saves $153K–$215K/yr</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- POST-LAUNCH MONTHLY BREAKDOWN -->
+  <div class="sec">
+    <p class="sec-lbl">Year 2+ monthly cost at a glance</p>
+    <div class="scenarios">
+      <div class="sc">
+        <p class="sc-tag">Conservative scenario</p>
+        <p class="sc-num">$11,300<span class="sc-period">/mo</span></p>
+        <p style="font-size:10px;color:var(--ink3);margin-top:4px">$135,600 / year</p>
+        <p class="sc-note">$40K retainer · lean infra · low AI usage · minimal feature dev · retained vendors unchanged</p>
+      </div>
+      <div class="sc featured">
+        <p class="sc-tag">Most likely — plan for this</p>
+        <p class="sc-num">$15,800<span class="sc-period">/mo</span></p>
+        <p style="font-size:10px;color:rgba(255,255,255,.5);margin-top:4px">$189,600 / year</p>
+        <p class="sc-note">$60K retainer · mid infra · $20K AI · email replacement · all retained vendors</p>
+      </div>
+      <div class="sc">
+        <p class="sc-tag">High development</p>
+        <p class="sc-num">$18,800<span class="sc-period">/mo</span></p>
+        <p style="font-size:10px;color:var(--ink3);margin-top:4px">$226,000 / year</p>
+        <p class="sc-note">$80K retainer · full Vercel Enterprise infra · $25K AI · active roadmap · heavy feature lift</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- BREAKEVEN -->
+  <div class="sec">
+    <p class="sec-lbl">Breakeven &amp; return</p>
+    <div class="be-row">
+      <div class="be">
+        <p class="be-lbl">Annual savings vs. current (Year 2+)</p>
+        <p class="be-num g">$153K–$215K</p>
+        <p class="be-sub">every year after launch</p>
+      </div>
+      <div class="be">
+        <p class="be-lbl">Breakeven on net build cost</p>
+        <p class="be-num g">16–21 months</p>
+        <p class="be-sub">from platform launch · ($170K–$270K) ÷ savings</p>
+      </div>
+      <div class="be">
+        <p class="be-lbl">5-year net benefit</p>
+        <p class="be-num g">$340K–$690K</p>
+        <p class="be-sub">4 yrs of savings minus net build cost</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- BEYOND THE NUMBERS -->
+  <div class="sec">
+    <p class="sec-lbl">Beyond the numbers — what changes for the audience</p>
+    <div class="kpi-strip">
+      <div class="kpi">
+        <p class="kpi-lbl">For the 8M annual visitors</p>
+        <p class="kpi-num" style="font-size:18px;line-height:1.25">Faster site · trip-planning AI · multilingual Q&amp;A</p>
+        <p class="kpi-sub" style="margin-top:8px">Native CMS replaces a vendor platform built in 2014. Page speed, mobile UX, and personalization move from constraint to lever.</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-lbl">For partners (hotels, attractions, Connect Pass)</p>
+        <p class="kpi-num" style="font-size:18px;line-height:1.25">Self-serve listings · faster updates · richer data</p>
+        <p class="kpi-sub" style="margin-top:8px">Partner CRM rebuilt with file-ingestion AI. Listing freshness moves from weeks to hours. Migration plan published in Phase 2.</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-lbl">For VSL marketing &amp; brand</p>
+        <p class="kpi-num" style="font-size:18px;line-height:1.25">Owned design system · campaign-velocity CMS</p>
+        <p class="kpi-sub" style="margin-top:8px">Move from vendor-templated layouts to a VSL-owned design system. Landing pages and campaign microsites ship in days, not sprints.</p>
+      </div>
+      <div class="kpi">
+        <p class="kpi-lbl">Migration risks &amp; mitigations</p>
+        <p class="kpi-num" style="font-size:18px;line-height:1.25">SEO redirects · email list portability · parallel-run</p>
+        <p class="kpi-sub" style="margin-top:8px">URL map, 301s, sitemap parity, and dual-running CRM during cutover are Phase 2 deliverables. Subscriber list and deliverability reputation transferred before Act On sunset.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- URGENT -->
+  <div class="sec">
+    <p class="sec-lbl">Decision required now — CRM renewal expires May 4, 2026</p>
+    <div class="urgent">
+      <div class="urgent-head">
+        <div class="urgent-dot"></div>
+        <p class="urgent-title">Two Granicus quotes on the table — both expire in days</p>
+      </div>
+      <div class="urgent-grid">
+        <div class="uopt">
+          <p class="uopt-title">1-year (Q-528266) — recommended if rebuild is committed</p>
+          <p class="uopt-body"><strong>$90,638/yr · $7,553/mo</strong><br>Minimal lock-in. Bridge term while HQ build proceeds. Expires naturally when new platform launches.</p>
+        </div>
+        <div class="uopt">
+          <p class="uopt-title">3-year (Q-528270) — only if rebuild timeline is uncertain</p>
+          <p class="uopt-body"><strong>$86,518/yr · $7,210/mo · locks through May 2029</strong><br>Saves ~$12.4K over term but commits VSL through 2029 regardless of rebuild outcome.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="div"></div>
+
+  <!-- ACTIONS -->
+  <div class="sec">
+    <p class="sec-lbl">Actions required</p>
+    <div class="act-row head">
+      <span>Priority</span><span style="padding-left:12px">Action</span><span style="text-align:right">Owner</span><span style="text-align:right">By</span>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-urgent">Urgent</div>
+      <div class="act-name">Sign CRM renewal — 1-year recommended if Phase 2 is approved</div>
+      <div class="act-owner">Leadership</div>
+      <div class="act-date">May 4, 2026</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-high">High</div>
+      <div class="act-name">Approve HQ Phase 2 engagement ($50K — decision point before full build)</div>
+      <div class="act-owner">CEO / CFO</div>
+      <div class="act-date">May 2026</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-high">High</div>
+      <div class="act-name">Confirm scope and application of $80K Media House credit</div>
+      <div class="act-owner">Finance</div>
+      <div class="act-date">May 2026</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-urgent">Urgent</div>
+      <div class="act-name">Confirm Simpleview / Act On exit terms &amp; notice periods before signing renewal</div>
+      <div class="act-owner">Ops / Legal</div>
+      <div class="act-date">May 4, 2026</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-high">High</div>
+      <div class="act-name">Define AI feature scope &amp; KPIs in Phase 2 (justifies $15K–$25K/yr API spend)</div>
+      <div class="act-owner">CMO / Tech</div>
+      <div class="act-date">Phase 2 start</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-high">High</div>
+      <div class="act-name">Obtain fixed-fee SOW with 15% contingency cap on Phase 3 build</div>
+      <div class="act-owner">Finance / HQ</div>
+      <div class="act-date">Phase 2 close</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-med">Medium</div>
+      <div class="act-name">Pull Ripe, Bandwango, EventsForce contract terms for Phase 3 evaluation</div>
+      <div class="act-owner">Ops</div>
+      <div class="act-date">Phase 2 start</div>
+    </div>
+    <div class="act-row">
+      <div class="act-pri p-med">Medium</div>
+      <div class="act-name">Publish SEO migration, partner-comms, and email-list cutover plans</div>
+      <div class="act-owner">CMO</div>
+      <div class="act-date">Phase 2 close</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="ftr">
+  <div class="ftr-logo">Visit Salt Lake</div>
+  <p class="ftr-note">Confidential — internal leadership review only. Sources: Granicus Q-528266 &amp; Q-528270 (Mar 9 2026), HQ Plugin Replacement Plan, HQ Phased Website Rebuild proposal. AI API estimates based on Claude Sonnet pricing at 2% visitor engagement rate (8M annual visitors). All figures are projections refined in Phase 2.</p>
+</div>
+
+</body>
+</html>

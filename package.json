@@ -1,0 +1,12 @@
+{
+  "name": "vsl-platform-investment-analysis",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Visit Salt Lake — Platform Investment Analysis (one-page leadership site)",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
