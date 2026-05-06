@@ -595,25 +595,25 @@ body{font-family:'Saans','DM Sans',system-ui,sans-serif;background:#fff;color:va
         <text x="448" y="76" class="be-label" style="font-weight:400;opacity:.85">(14–27 from launch)</text>
 
         <!-- Rebuild range band: top edge = worst case, bottom edge = best case -->
-        <!-- Worst: (70,290) → (210,188.3) → (770,59.2) -->
-        <!-- Best:  (70,290) → (210,202.3) → (770,107.6) -->
-        <path class="rebuild-band" d="M 70 290 L 210 188.3 L 770 59.2 L 770 107.6 L 210 202.3 Z"/>
+        <!-- Worst: (70,290) → (210,192.3 = $729,181) → (770,68.2 = $1.655M) -->
+        <!-- Best:  (70,290) → (210,205.7 = $629,181) → (770,114.8 = $1.308M) -->
+        <path class="rebuild-band" d="M 70 290 L 210 192.3 L 770 68.2 L 770 114.8 L 210 205.7 Z"/>
         <!-- Worst case edge -->
-        <path class="rebuild-edge" d="M 70 290 L 210 188.3 L 770 59.2"/>
+        <path class="rebuild-edge" d="M 70 290 L 210 192.3 L 770 68.2"/>
         <!-- Best case edge -->
-        <path class="rebuild-edge dashed" d="M 70 290 L 210 202.3 L 770 107.6"/>
+        <path class="rebuild-edge dashed" d="M 70 290 L 210 205.7 L 770 114.8"/>
 
-        <!-- Stay-on-Simpleview line -->
-        <line class="stay-line" x1="70" y1="290" x2="770" y2="22"/>
+        <!-- Stay-on-Simpleview line: ends at $1.921M → y=32.6 -->
+        <line class="stay-line" x1="70" y1="290" x2="770" y2="32.6"/>
 
         <!-- 5-year endpoint markers + labels -->
-        <circle cx="770" cy="22"    r="4" fill="#6F8499"/>
-        <circle cx="770" cy="59.2"  r="4" fill="var(--green)"/>
-        <circle cx="770" cy="107.6" r="4" fill="var(--green)"/>
+        <circle cx="770" cy="32.6"  r="4" fill="#6F8499"/>
+        <circle cx="770" cy="68.2"  r="4" fill="var(--green)"/>
+        <circle cx="770" cy="114.8" r="4" fill="var(--green)"/>
 
-        <text x="780" y="22"    class="endpoint-label gray">$1.92M stay</text>
-        <text x="780" y="63"    class="endpoint-label g">$1.65M worst</text>
-        <text x="780" y="111"   class="endpoint-label g">$1.31M best</text>
+        <text x="780" y="36"    class="endpoint-label gray">$1.92M stay</text>
+        <text x="780" y="72"    class="endpoint-label g">$1.65M worst</text>
+        <text x="780" y="118"   class="endpoint-label g">$1.31M best</text>
       </svg>
       <p class="chart-caption">Cumulative cash spent over 60 months. The <strong>stay</strong> line grows steadily at today's $32,015/mo. The <strong>rebuild</strong> band climbs faster during the build year (operating costs continue while building) then flattens once the new platform is live. The two paths cross between months 26–39 from project start (14–27 months from launch). By year 5, the rebuild path has saved <strong>$265K–$615K</strong> versus staying put.</p>
     </div>
