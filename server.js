@@ -20,21 +20,23 @@ const server = http.createServer((req, res) => {
   let urlPath = decodeURIComponent(req.url.split('?')[0]);
   if (urlPath === '/' || urlPath === '') urlPath = '/index.html';
 
-  const filePath = path.join(ROOT, urlPath);
-  if (!filePath.startsWith(ROOT)) { res.writeHead(403); return res.end('Forbidden'); }
+  const tryPaths = [
+    path.join(ROOT, urlPath),
+    path.join(ROOT, urlPath + '.html'),
+  ];
+  const filePath = tryPaths.find(p => p.startsWith(ROOT) && fs.existsSync(p) && fs.statSync(p).isFile());
 
-  fs.stat(filePath, (err, stat) => {
-    if (err || !stat.isFile()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain' });
-      return res.end('Not found');
-    }
-    const ext = path.extname(filePath).toLowerCase();
-    res.writeHead(200, {
-      'Content-Type': MIME[ext] || 'application/octet-stream',
-      'Cache-Control': 'public, max-age=300',
-    });
-    fs.createReadStream(filePath).pipe(res);
+  if (!filePath) {
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    return res.end('Not found');
+  }
+
+  const ext = path.extname(filePath).toLowerCase();
+  res.writeHead(200, {
+    'Content-Type': MIME[ext] || 'application/octet-stream',
+    'Cache-Control': 'public, max-age=300',
   });
+  fs.createReadStream(filePath).pipe(res);
 });
 
 server.listen(PORT, () => {
