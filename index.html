@@ -153,6 +153,33 @@ body{font-family:'Saans','DM Sans',system-ui,sans-serif;background:#fff;color:va
 .be-num.g{color:var(--teal)}
 .be-sub{font-size:10px;color:var(--ink3);margin-top:4px}
 
+/* CHART */
+.chart-wrap{margin-top:20px;background:var(--surface);border-radius:10px;padding:24px 26px}
+.chart-legend{display:flex;gap:22px;flex-wrap:wrap;margin-bottom:18px}
+.lg-item{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--ink2);font-family:'DM Mono',monospace;letter-spacing:.03em}
+.lg-swatch{width:18px;height:10px;border-radius:2px;flex-shrink:0}
+.lg-stay{background:#6F8499}
+.lg-rebuild{background:rgba(13,76,38,.28);border-top:2px solid var(--green);border-bottom:2px solid var(--green)}
+.lg-be{background:rgba(242,159,31,.18);border:1px dashed var(--gold-md)}
+.chart{width:100%;height:auto;display:block;overflow:visible}
+.chart text{font-family:'DM Mono',monospace;font-size:10px;fill:var(--ink3)}
+.chart .tick{font-size:10px}
+.chart .axis-base{stroke:var(--ink2);stroke-width:1}
+.chart .grid-line{stroke:var(--ink5);stroke-width:1;stroke-dasharray:2 4}
+.chart .stay-line{stroke:#6F8499;stroke-width:2.5;fill:none}
+.chart .rebuild-band{fill:rgba(13,76,38,.18)}
+.chart .rebuild-edge{stroke:var(--green);stroke-width:2;fill:none}
+.chart .rebuild-edge.dashed{stroke-dasharray:5 4;opacity:.65}
+.chart .be-zone{fill:rgba(242,159,31,.14);stroke:var(--gold-md);stroke-width:1;stroke-dasharray:3 3}
+.chart .launch-line{stroke:var(--ink4);stroke-width:1;stroke-dasharray:3 4}
+.chart .endpoint-label{font-family:'Saans',sans-serif;font-size:11px;font-weight:500;fill:var(--ink2)}
+.chart .endpoint-label.g{fill:var(--green)}
+.chart .endpoint-label.gray{fill:var(--ink3)}
+.chart .be-label{font-family:'Saans',sans-serif;font-size:10px;font-weight:500;fill:var(--gold);text-anchor:middle}
+.chart .axis-title{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;fill:var(--ink3)}
+.chart-caption{font-size:11px;color:var(--ink3);margin-top:14px;line-height:1.6}
+.chart-caption strong{color:var(--ink2);font-weight:500}
+
 /* URGENT */
 .urgent{background:var(--red-lt);border:1px solid #E5C5C2;border-radius:10px;padding:18px 22px}
 .urgent-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
@@ -514,6 +541,75 @@ body{font-family:'Saans','DM Sans',system-ui,sans-serif;background:#fff;color:va
         <p class="be-num g">$340K–$690K</p>
         <p class="be-sub">4 yrs of savings minus net build cost</p>
       </div>
+    </div>
+
+    <!-- Cumulative cost chart -->
+    <div class="chart-wrap">
+      <div class="chart-legend">
+        <span class="lg-item"><span class="lg-swatch lg-stay"></span>Stay on Simpleview</span>
+        <span class="lg-item"><span class="lg-swatch lg-rebuild"></span>Rebuild path · best to worst case</span>
+        <span class="lg-item"><span class="lg-swatch lg-be"></span>Breakeven zone</span>
+      </div>
+      <svg viewBox="0 0 800 360" preserveAspectRatio="xMidYMid meet" class="chart" role="img" aria-label="Cumulative cost over 5 years: stay on Simpleview vs rebuild">
+        <!-- Grid lines -->
+        <line class="grid-line" x1="70" y1="22"  x2="770" y2="22"/>
+        <line class="grid-line" x1="70" y1="89"  x2="770" y2="89"/>
+        <line class="grid-line" x1="70" y1="156" x2="770" y2="156"/>
+        <line class="grid-line" x1="70" y1="223" x2="770" y2="223"/>
+        <line class="axis-base" x1="70" y1="290" x2="770" y2="290"/>
+
+        <!-- Y axis labels ($ values) -->
+        <text x="62" y="26"  text-anchor="end">$2.0M</text>
+        <text x="62" y="93"  text-anchor="end">$1.5M</text>
+        <text x="62" y="160" text-anchor="end">$1.0M</text>
+        <text x="62" y="227" text-anchor="end">$500K</text>
+        <text x="62" y="294" text-anchor="end">$0</text>
+
+        <!-- X axis labels (months/years) -->
+        <text x="70"  y="308" text-anchor="middle">0</text>
+        <text x="210" y="308" text-anchor="middle">12</text>
+        <text x="350" y="308" text-anchor="middle">24</text>
+        <text x="490" y="308" text-anchor="middle">36</text>
+        <text x="630" y="308" text-anchor="middle">48</text>
+        <text x="770" y="308" text-anchor="middle">60</text>
+
+        <!-- X axis title -->
+        <text x="420" y="340" class="axis-title" text-anchor="middle">Months from project start</text>
+        <!-- Y axis title -->
+        <text class="axis-title" transform="translate(20,180) rotate(-90)" text-anchor="middle">Cumulative spend</text>
+
+        <!-- Launch marker (M=12) -->
+        <line class="launch-line" x1="210" y1="22" x2="210" y2="290"/>
+        <text x="210" y="16" text-anchor="middle" class="be-label">Launch · Month 12</text>
+
+        <!-- Breakeven zone (M=21.5 to M=33.2 from start) -->
+        <rect class="be-zone" x="320.8" y="22" width="136.5" height="268"/>
+        <text x="389" y="48" class="be-label">Breakeven zone</text>
+        <text x="389" y="62" class="be-label" style="font-weight:400;opacity:.85">months 21–33 from start</text>
+        <text x="389" y="76" class="be-label" style="font-weight:400;opacity:.85">(10–21 from launch)</text>
+
+        <!-- Rebuild range band: top edge = worst case, bottom edge = best case -->
+        <!-- Worst: (70,290) → (210,198.8) → (770,69.6) -->
+        <!-- Best:  (70,290) → (210,212.7) → (770,118.1) -->
+        <path class="rebuild-band" d="M 70 290 L 210 198.8 L 770 69.6 L 770 118.1 L 210 212.7 Z"/>
+        <!-- Worst case edge -->
+        <path class="rebuild-edge" d="M 70 290 L 210 198.8 L 770 69.6"/>
+        <!-- Best case edge -->
+        <path class="rebuild-edge dashed" d="M 70 290 L 210 212.7 L 770 118.1"/>
+
+        <!-- Stay-on-Simpleview line -->
+        <line class="stay-line" x1="70" y1="290" x2="770" y2="22"/>
+
+        <!-- 5-year endpoint markers + labels -->
+        <circle cx="770" cy="22"    r="4" fill="#6F8499"/>
+        <circle cx="770" cy="69.6"  r="4" fill="var(--green)"/>
+        <circle cx="770" cy="118.1" r="4" fill="var(--green)"/>
+
+        <text x="780" y="22"    class="endpoint-label gray">$1.92M stay</text>
+        <text x="780" y="73"    class="endpoint-label g">$1.58M worst</text>
+        <text x="780" y="121"   class="endpoint-label g">$1.23M best</text>
+      </svg>
+      <p class="chart-caption">Cumulative cash spent over 60 months. The <strong>stay</strong> line grows steadily at today's $32,015/mo. The <strong>rebuild</strong> band climbs faster during the build year (operating costs continue while building) then flattens once the new platform is live. The two paths cross between months 21–33 from project start (10–21 months from launch). By year 5, the rebuild path has saved <strong>$340K–$690K</strong> versus staying put.</p>
     </div>
   </div>
 
